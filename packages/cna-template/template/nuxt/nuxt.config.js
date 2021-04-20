@@ -1,6 +1,8 @@
 <%_ if (ui === 'vuetify') { _%>import colors from 'vuetify/es5/util/colors'
 
-<%_ } _%>export default {
+<%_ } _%>
+// https://go.nuxtjs.dev/typescript
+<%= typescript ? 'export default ' : 'module.exports = ' %>{
   <%_ if (mode === 'spa') { _%>
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,

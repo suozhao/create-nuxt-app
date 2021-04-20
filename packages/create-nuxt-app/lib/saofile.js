@@ -24,7 +24,6 @@ module.exports = {
 
     const { cliOptions = {} } = this.sao.opts
     const edge = cliOptions.edge ? '-edge' : ''
-
     return {
       typescript,
       pwa,
@@ -84,12 +83,11 @@ module.exports = {
         templateDir: join(frameworksDir, this.answers.ci)
       })
     }
-
     actions.push({
       type: 'add',
       files: '*',
       filters: {
-        '_.eslintrc.js': 'linter.includes("eslint")',
+        'choo.eslintrc.js': 'linter.includes("eslint")',
         '_.prettierrc': 'linter.includes("prettier")',
         '_jsconfig.json': 'devTools.includes("jsconfig.json")',
         'tsconfig.json': 'language.includes("ts")',
@@ -107,12 +105,12 @@ module.exports = {
         gitignore: '.gitignore',
         '_package.json': 'package.json',
         '_.prettierrc': '.prettierrc',
-        '_.eslintrc.js': '.eslintrc.js',
+        'choo.eslintrc.js': '.eslintrc.js',
         '_jsconfig.json': 'jsconfig.json',
         '_stylelint.config.js': 'stylelint.config.js',
         '_commitlint.config.js': 'commitlint.config.js',
         'semantic.yml': '.github/semantic.yml',
-        'dependabot.yml': '.github/dependabot.yml'
+        'dependabot.yml': '.github/dependabot.yml',
       }
     })
 
@@ -134,8 +132,26 @@ module.exports = {
 
     actions.push({
       type: 'remove',
-      files: 'package.js'
+      files: ['package.js','_.eslintrc.js']
     })
+    if(this.answers.language.includes('ts')){
+      actions.push({
+        type: 'remove',
+        files: ['server/*.js','configs/*.js'],
+      })
+      actions.push({
+        type:'move',
+        patterns:{
+          'nuxt.config.js':'nuxt.config.ts',
+        }
+      })
+    }else{
+      actions.push({
+        type: 'remove',
+        files: ['server/*.ts','configs/*.ts'],
+      })
+    }
+    
 
     return actions
   },

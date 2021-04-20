@@ -59,21 +59,21 @@ module.exports = [
       { name: 'Progressive Web App (PWA)', value: 'pwa' },
       { name: 'Content - Git-based headless CMS', value: 'content' }
     ],
-    default: []
+    default: ['axios']
   },
   {
     name: 'linter',
     message: 'Linting tools:',
-    type: 'checkbox',
+    type: 'list',
     pageSize: 10,
     choices: [
       { name: 'ESLint', value: 'eslint' },
-      { name: 'Prettier', value: 'prettier' },
-      { name: 'Lint staged files', value: 'lintStaged' },
-      { name: 'StyleLint', value: 'stylelint' },
-      { name: 'Commitlint', value: 'commitlint' }
+      // { name: 'Prettier', value: 'prettier' },
+      // { name: 'Lint staged files', value: 'lintStaged' },
+      // { name: 'StyleLint', value: 'stylelint' },
+      // { name: 'Commitlint', value: 'commitlint' }
     ],
-    default: []
+    default: 'eslint'
   },
   {
     name: 'test',

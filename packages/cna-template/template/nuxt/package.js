@@ -1,3 +1,5 @@
+
+const { chalk, execa, error } = require('@vue/cli-shared-utils')
 module.exports = {
   apply (pkg, generator) {
     // edge
@@ -20,7 +22,6 @@ module.exports = {
       eslint: '<%= pmRun %> lint:js',
       stylelint: '<%= pmRun %> lint:style'
     }
-
     if (!eslint) {
       delete lintScripts.eslint
       delete pkg.scripts['lint:js']
@@ -87,6 +88,19 @@ module.exports = {
     if (typescript && eslint) {
       delete pkg.devDependencies['@nuxtjs/eslint-config']
     }
+    let version = 'latest'
+    try {
+      const { stdout } = execa.sync('npm', [
+        'info',
+        'eslint-config-168',
+        'dist-tags'
+      ])
+      let a = eval(`() => (${stdout})`)
+      version = typescript ? a()['ts'] : `^${a()['latest']}`
+    } catch (e) {
+      error(`${chalk.cyan('eslint-config-168获取版本号失败')}`)
+    }
+    pkg.devDependencies['eslint-config-168'] = version
     return pkg
   }
 }
